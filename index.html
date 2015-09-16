@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SignalViewer Example</title>
+</head>
+<body>
+
+  <div id="host"></div>
+  <p>Simulate a signal with random values within a range and render with SignalViewer.js.</p>
+
+  <script src="SignalViewer"></script>
+  <script>
+
+  var buffer = [];
+  var host = document.querySelector('#host');
+  var options = { min: -10, max: 10 };
+  var viewer = SignalViewer(options);
+
+  function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function sample(){
+    var random = getRandomInt(options.min, options.max)
+
+    // Add to front, remove from end;
+    buffer.push(random);
+    if (buffer.length >= 100){
+      buffer.splice(0, 1);
+    }
+
+    viewer.render(buffer);
+
+    window.requestAnimationFrame(sample);
+  }
+
+  viewer.create(host);
+  sample();
+
+  </script>
+</body>
+</html>
