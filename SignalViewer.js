@@ -15,9 +15,14 @@ function SignalViewer(params){
   params = params || {};
 
   this.config = {};
+  this.setConfig(params, _defaults);
+}
 
-  for (var key in _defaults){
-    this.config[key] = (params[key] !== undefined) ? params[key] : _defaults[key]
+SignalViewer.prototype.setConfig = function(params, defaults){
+  var defaults = defaults || this.config;
+
+  for (var key in defaults){
+    this.config[key] = (params[key] !== undefined) ? params[key] : defaults[key]
   }
 }
 
