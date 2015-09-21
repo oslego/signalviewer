@@ -41,9 +41,7 @@ SignalViewer.prototype.create = function(host){
   }
 
   this.canvas = document.createElement('canvas');
-  this.canvas.width = this.config.width;
-  this.canvas.height = this.config.height;
-  this.canvas.style.outline = "1px solid red";
+  this.setSize(host);
 
   host.appendChild(this.canvas);
 }
@@ -52,6 +50,17 @@ SignalViewer.prototype.destroy = function(){
   if (this.canvas){
     this.canvas.parentNode.removeChild(this.canvas)
   }
+}
+
+SignalViewer.prototype.setSize = function(el){
+  if (el instanceof HTMLElement){
+      var styles = window.getComputedStyle(el, null);
+      this.config.width = parseInt(styles['width']);
+      this.config.height = parseInt(styles['height'])
+  }
+
+  this.canvas.width = this.config.width;
+  this.canvas.height = this.config.height;
 }
 
 SignalViewer.prototype.render = function(buffer){
