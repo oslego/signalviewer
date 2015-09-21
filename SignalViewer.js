@@ -8,7 +8,13 @@ function SignalViewer(params){
     max: 1,
     width: document.body.offsetWidth,
     height: 480,
-    showLatestValue: true
+    showLatestValue: true,
+    
+    // style
+    lineColor: '#f00',
+    lineWidth: 1,
+    font: 'bold 90px Helvetica',
+    fontColor: '#000'
   }
 
   params = params || {};
@@ -73,8 +79,8 @@ SignalViewer.prototype.render = function(buffer){
 
     var value = scaleValue.call(this, buffer[i]);
 
-    context.lineWidth = 2;
-    context.strokeStyle = '#ff0000';
+    context.lineWidth = this.config.lineWidth;
+    context.strokeStyle = this.config.lineColor;
     context.lineCap = 'round';
     context.lineJoin = 'round';
     context.lineTo(i * step, this.canvas.height - value);
@@ -85,7 +91,8 @@ SignalViewer.prototype.render = function(buffer){
   if (this.config.showLatestValue){
     var displayValue = buffer[buffer.length-1];
 
-    context.font = 'bold 90px Helvetica';
+    context.font = this.config.font;
+    context.fillStyle = this.config.fontColor;
     context.textAlign = 'right';
     context.fillText(displayValue, this.canvas.width - 15, 90);
   }
